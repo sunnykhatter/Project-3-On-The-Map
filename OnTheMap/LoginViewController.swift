@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
                         if result as? Bool == true  {
                             //load map view
                             performUIUpdatesOnMain{
-//                                self.performSegueWithIdentifier("Map", sender: self)
+                                self.performSegueWithIdentifier("tabBarSegue", sender: self)
                             }
                         }
                     }
