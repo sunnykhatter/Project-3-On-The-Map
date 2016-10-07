@@ -36,7 +36,7 @@ class UdacityClient: NSObject {
         
         /* 1. No parameters needed*/
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: tmdbURLFromParameters(method))
+        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(method))
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { data, response, error in
             func sendError(error: String, code: Int) {
@@ -73,7 +73,7 @@ class UdacityClient: NSObject {
         
         /* 1. No parameters needed*/
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: tmdbURLFromParameters(method))
+        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(method))
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -114,7 +114,7 @@ class UdacityClient: NSObject {
     // MARK: DELETE
     func taskForDELETEMethod(completionHandlerForDELETE: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: tmdbURLFromParameters(UdacityMethods.Session))
+        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(UdacityMethods.Session))
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
@@ -160,7 +160,7 @@ class UdacityClient: NSObject {
     
     
     // create a URL from parameters
-    private func tmdbURLFromParameters(withPathExtension: String? = nil) -> NSURL {
+    private func UdacityURLFromParameters(withPathExtension: String? = nil) -> NSURL {
         
         let components = NSURLComponents()
         components.scheme = UdacityConstants.ApiScheme

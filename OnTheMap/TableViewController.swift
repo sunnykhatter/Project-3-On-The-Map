@@ -10,10 +10,17 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate {
     
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
+
+    }
     override func viewWillAppear(animated: Bool) {
     }
     

@@ -15,6 +15,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         override func viewDidLoad() {
             super.viewDidLoad()
             
+            ParseClient.sharedInstance().getStudentLocations { (locations, error) in
+                if let locations = locations {
+                    performUIUpdatesOnMain {
+                        
+                        for result in locations {
+                            let location = CLLocationCoordinate2DMake(result.latitude, result.longitude)
+                            let dropPin = MKPointAnnotation()
+                            dropPin.coordinate = location
+                            dropPin.title = result.firstName + " " + result.lastName
+                            dropPin.subtitle = result.mediaURL
+                            self.mapView.addAnnotation(dropPin)
+                        }
+                        
+                        }
+                    }
+                }
+            
         }
         
         override func didReceiveMemoryWarning() {

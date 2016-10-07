@@ -8,10 +8,12 @@
 
 import Foundation
 
+
 struct StudentInformation {
-    
-    let objectId, uniqueKey, firstName, lastName, mapString, mediaURL : String
-    let latitude, longitude:Double
+    static var StudentArray : [StudentInformation] = []
+
+    var objectId, uniqueKey, firstName, lastName, mapString, mediaURL : String
+    var latitude, longitude:Double
     
     init(dictionary: [String:AnyObject]) {
         
@@ -34,7 +36,7 @@ struct StudentInformation {
             self.firstName = ""
         }
         
-        if let lastName = dictionary["firstName"] {
+        if let lastName = dictionary["lasttName"] {
             self.lastName = lastName as! String
         } else {
             self.lastName = ""
@@ -66,6 +68,18 @@ struct StudentInformation {
         
         
     }
+    static func locationsFromResults(results: [[String:AnyObject]]) -> [StudentInformation] {
+        
+        var locations = [StudentInformation]()
+        
+        // iterate through array of dictionaries, each  is a dictionary
+        for result in results {
+            locations.append(StudentInformation(dictionary: result))
+        }
+        
+        return locations
+    }
     
+
     
-}
+  }
