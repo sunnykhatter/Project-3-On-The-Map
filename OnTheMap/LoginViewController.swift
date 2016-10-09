@@ -16,7 +16,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        email.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
+        password.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
     }
 
     override func didReceiveMemoryWarning() {

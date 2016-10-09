@@ -21,8 +21,30 @@ class TableViewController: UIViewController, UITableViewDelegate {
         self.tableView.reloadData()
 
     }
+    
     override func viewWillAppear(animated: Bool) {
+        getLocations()
+        self.tableView.reloadData()
+
     }
+    
+    func getLocations() {
+        ParseClient.sharedInstance().getStudentLocations { (locations, error) in
+            if let locations = locations {
+                StudentInformation.StudentArray = locations
+                
+                self.tableView.reloadData()
+                performUIUpdatesOnMain {
+                    //self.activityIndicatorView.stopAnimating()
+                    //self.overlay?.removeFromSuperview()
+                    //Convenience.alert(self, title: "Error", message: "Can't get location info. Try again later", actionTitle: "OK")
+                }
+            }
+        }
+    
+
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -38,19 +60,46 @@ class TableViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return StudentInformation.StudentArray.count
     }
     
-    /*
-     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-     
-     // Configure the cell...
-     
-     return cell
-     }
-     */
     
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! LocationTableViewCell
+         let name = StudentInformation.StudentArray[indexPath.row].firstName + " " + String(StudentInformation.StudentArray[indexPath.row].lastName)
+        cell.nameLabel.text = name
+         
+         return cell
+     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let location = StudentInformation.StudentArray[indexPath.row]
+        let link = location.mediaURL
+        
+        if let requestUrl = NSURL(string: link) {
+            if UIApplication.sharedApplication().canOpenURL(requestUrl) {
+                UIApplication.sharedApplication().openURL(requestUrl)
+            } else {
+                
+                alert(self, title: "Error", message: "invalid link", actionTitle: "Dismiss")
+            }
+        } else {
+                alert(self, title: "Error", message: "invalid link", actionTitle: "Dismiss")
+        }
+        }
+    }
+
+    func alert(sender: AnyObject?, title: String, message: String, actionTitle: String){
+        let alertController = UIAlertController(title: title, message:
+            message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default,handler: nil))
+        
+        sender!.presentViewController(alertController, animated: true, completion: nil)
+    }
+
+
+
     /*
      // Override to support conditional editing of the table view.
      override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -96,4 +145,4 @@ class TableViewController: UIViewController, UITableViewDelegate {
      }
      */
     
-}
+
