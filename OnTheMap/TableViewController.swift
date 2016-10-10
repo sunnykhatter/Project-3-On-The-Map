@@ -14,6 +14,7 @@ class TableViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     
     
@@ -33,11 +34,12 @@ class TableViewController: UIViewController, UITableViewDelegate {
             if let locations = locations {
                 StudentInformation.StudentArray = locations
                 
-                self.tableView.reloadData()
                 performUIUpdatesOnMain {
                     //self.activityIndicatorView.stopAnimating()
                     //self.overlay?.removeFromSuperview()
                     //Convenience.alert(self, title: "Error", message: "Can't get location info. Try again later", actionTitle: "OK")
+                    self.tableView.reloadData()
+
                 }
             }
         }
