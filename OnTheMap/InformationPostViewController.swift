@@ -28,6 +28,8 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        print(UdacityClient.sharedInstance().UserID!)
+        
         // Do any additional setup after loading the view.
     }
 
@@ -61,7 +63,10 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
             return
         }
         
-        let jsonBody: String = "{\"uniqueKey\": \"\(UdacityClient.sharedInstance().UserID!)\", \"firstName\": \"\(UdacityClient.sharedInstance().firstName!)\" , \"lastName\": \"\(UdacityClient.sharedInstance().lastName!)\",\"mapString\": \"\(locationTextField.text)\", \"mediaURL\": \"\(addALinkTextField.text)\",\"latitude\": \(coordinates!.latitude), \"longitude\": \(coordinates!.longitude)}"
+        let jsonBody: String = "{\"uniqueKey\": \"\(UdacityClient.sharedInstance().UserID!)\", \"firstName\": \"\(UdacityClient.sharedInstance().firstName!)\" , \"lastName\": \"\(UdacityClient.sharedInstance().lastName!)\",\"mapString\": \"\(locationTextField.text!)\", \"mediaURL\": \"\(addALinkTextField.text!)\",\"latitude\": \(coordinates!.latitude), \"longitude\": \(coordinates!.longitude)}"
+            
+            
+
         
         // if it is the first time for a user to add location
         if UdacityClient.sharedInstance().updateLoaction == false {
