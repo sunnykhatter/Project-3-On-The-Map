@@ -16,8 +16,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        email.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
-        password.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,8 +28,8 @@ class LoginViewController: UIViewController {
         guard let email = email.text where self.email.text != ""
             else {
                 performUIUpdatesOnMain{
-//                    Convenience.alert(self, title: "Error", message: "Email can't be empty", actionTitle: "Dismiss")
-                    print("email cant be empty")
+                    self.alert(self, title: "Error", message: "Email can't be empty", actionTitle: "Dismiss")
+                    
                 }
                 return
         }
@@ -39,8 +37,8 @@ class LoginViewController: UIViewController {
         guard let password = self.password.text where self.password.text != ""
             else {
                 performUIUpdatesOnMain{
-//                    Convenience.alert(self, title: "Error", message: "Password can't be empty", actionTitle: "Dismiss")
-                    print("password cant be empty")
+                    self.alert(self, title: "Error", message: "Password can't be empty", actionTitle: "Dismiss")
+                    
 
                 }
                 return
@@ -59,8 +57,8 @@ class LoginViewController: UIViewController {
                 }
                 print(error)
                 performUIUpdatesOnMain {
-//                    Convenience.alert(self, title: "Error", message: message, actionTitle: "Try again")
-                        print("try again!")
+                        self.alert(self, title: "Error", message: message, actionTitle: "Try again")
+                    
                 }
             } else{
                 UdacityClient.sharedInstance().SessionID = SessionResults[UdacityJSONResponseKeys.SessionID]
@@ -83,5 +81,15 @@ class LoginViewController: UIViewController {
         }
         
     }
+    
+    
+    func alert(sender: AnyObject?, title: String, message: String, actionTitle: String){
+        let alertController = UIAlertController(title: title, message:
+            message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default,handler: nil))
+        
+        sender!.presentViewController(alertController, animated: true, completion: nil)
+    }
+
 }
 

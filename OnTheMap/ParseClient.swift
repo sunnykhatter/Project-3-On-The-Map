@@ -25,10 +25,10 @@ class ParseClient: NSObject {
         
         /* 1. Set the parameters */
         var parametersWithApiKey = parameters
-        print(tmdbURLFromParameters(parametersWithApiKey, withPathExtension: method))
+        print(UdacityURLFromParameters(parametersWithApiKey, withPathExtension: method))
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: tmdbURLFromParameters(parametersWithApiKey, withPathExtension: method))
+        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(parametersWithApiKey, withPathExtension: method))
         request.addValue(ParseAPIValue.Parse_Application_ID, forHTTPHeaderField: ParseAPIKey.Parse_Application_ID)
         request.addValue(ParseAPIValue.REST_API_Key, forHTTPHeaderField: ParseAPIKey.REST_API_Key)
         if let _ = parameters["where"] {
@@ -77,7 +77,7 @@ class ParseClient: NSObject {
     
     func taskForPOSTandPUTMethod(httpMethod: String, method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOSTandPUT: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
-        let request = NSMutableURLRequest(URL: tmdbURLFromParameters(parameters, withPathExtension: method))
+        let request = NSMutableURLRequest(URL: UdacityURLFromParameters(parameters, withPathExtension: method))
         request.HTTPMethod = httpMethod
         request.addValue(ParseAPIValue.Parse_Application_ID, forHTTPHeaderField: ParseAPIKey.Parse_Application_ID)
         request.addValue(ParseAPIValue.REST_API_Key, forHTTPHeaderField: ParseAPIKey.REST_API_Key)
@@ -116,7 +116,7 @@ class ParseClient: NSObject {
     
     
     // create a URL from parameters
-    private func tmdbURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
+    private func UdacityURLFromParameters(parameters: [String:AnyObject], withPathExtension: String? = nil) -> NSURL {
         
         var URLString: String = ""
         

@@ -43,14 +43,14 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
 
     @IBAction func submit(sender: AnyObject) {
         
-        let linkString = addALinkTextField.text
         
-        if (linkString  == "Enter a Link to Share Here" || linkString  == "") {
+        
+        if (addALinkTextField.text  == "Enter a Link to Share Here" || addALinkTextField.text  == "") {
             alert(self, title: "Error", message: "Please enter a link", actionTitle: "enter")
             return
         }
         
-        if let validURL: NSURL = NSURL(string: linkString!) {
+        if let validURL: NSURL = NSURL(string: addALinkTextField.text!) {
             // Successfully constructed an NSURL; open it
             if !UIApplication.sharedApplication().canOpenURL(validURL) {
                 alert(self, title: "Error", message: "invalid link", actionTitle: "Try again")
@@ -78,8 +78,7 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
                 }
             }
         } else {
-            //print(jsonBody)
-            // user request to change location
+
             ParseClient.sharedInstance().updateLocation(jsonBody) { (result, error) in
                 if result == true {
                     UdacityClient.sharedInstance().locationAdded = true
@@ -114,13 +113,13 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
                 if let placemark = placemarks?.first {
                     self.coordinates = placemark.location!.coordinate
                     let location = CLLocationCoordinate2DMake(self.coordinates!.latitude, self.coordinates!.longitude)
-                    let dropPin = MKPointAnnotation()
-                    dropPin.coordinate = location
-                    self.mapView.addAnnotation(dropPin)
+                    let pin = MKPointAnnotation()
+                    pin.coordinate = location
+                    self.mapView.addAnnotation(pin)
                     // set boundaries of the zoom
-                    let span = MKCoordinateSpanMake(0.01, 0.01)
+                    let span = MKCoordinateSpanMake(0.1, 0.1)
                     // now move the map
-                    let region = MKCoordinateRegion(center: dropPin.coordinate, span: span)
+                    let region = MKCoordinateRegion(center: pin.coordinate, span: span)
                     self.mapView.setRegion(region, animated: true)
                     UIView.animateWithDuration(0.4) {
                         self.whereAreYouStudyingView.alpha = 0.0
