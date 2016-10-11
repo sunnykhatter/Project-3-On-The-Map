@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9lB-hg-Osd">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -107,10 +107,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="PfC-HO-zq9">
-                                <frame key="frameInset" minX="169" minY="315" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="77" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9Ip-fw-yH8">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -152,9 +148,14 @@
                                     <outlet property="delegate" destination="2dx-j9-aoO" id="KHL-md-lkM"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="PfC-HO-zq9">
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="PfC-HO-zq9" firstAttribute="centerY" secondItem="gfP-Rl-4sO" secondAttribute="centerY" id="XGn-o6-Fxz"/>
+                            <constraint firstItem="PfC-HO-zq9" firstAttribute="centerX" secondItem="9Ip-fw-yH8" secondAttribute="centerX" id="XVQ-8q-F80"/>
                             <constraint firstItem="9Ip-fw-yH8" firstAttribute="bottom" secondItem="Ztl-9L-QLP" secondAttribute="top" id="ZFl-fc-voq"/>
                             <constraint firstAttribute="trailing" secondItem="9Ip-fw-yH8" secondAttribute="trailing" id="c6f-lc-ADz"/>
                             <constraint firstItem="9Ip-fw-yH8" firstAttribute="leading" secondItem="gfP-Rl-4sO" secondAttribute="leading" id="cEO-gp-v68"/>
@@ -175,7 +176,7 @@
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="FyB-2I-urT">
                                 <connections>
-                                    <action selector="refresh:" destination="2dx-j9-aoO" id="iZu-Ih-Cs6"/>
+                                    <action selector="refresh:" destination="2dx-j9-aoO" id="Dy4-qs-ECu"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -203,7 +204,7 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Adh-23-lPp"/>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8d2-tD-w9A">
-                                <color key="color" red="0.24313725489999999" green="0.45098039220000002" blue="0.65098039220000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -219,7 +220,7 @@
                     <navigationItem key="navigationItem" title="On The Map" id="54H-Jp-8zv">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="kBQ-uX-8rG">
                             <connections>
-                                <action selector="logout:" destination="o10-Jz-scG" id="91U-hx-frC"/>
+                                <action selector="logoutFunction:" destination="o10-Jz-scG" id="u8h-at-kMW"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -442,6 +443,6 @@
         <image name="pin" width="27" height="27"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PZc-7H-588"/>
+        <segue reference="Ktq-XJ-fnS"/>
     </inferredMetricsTieBreakers>
 </document>

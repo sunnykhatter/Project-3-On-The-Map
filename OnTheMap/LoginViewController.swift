@@ -83,6 +83,9 @@ class LoginViewController: UIViewController {
         
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
     func alert(sender: AnyObject?, title: String, message: String, actionTitle: String){
         let alertController = UIAlertController(title: title, message:

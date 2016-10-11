@@ -21,9 +21,16 @@ class TableViewController: UIViewController, UITableViewDelegate {
 
     }
     
+    
     @IBAction func refresh(sender: AnyObject) {
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         getLocations()
+        activityIndicator.stopAnimating()
+        activityIndicator.hidden = true        
     }
+    
+
     
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
@@ -37,9 +44,6 @@ class TableViewController: UIViewController, UITableViewDelegate {
         getLocations()
         self.tableView.reloadData()
         self.activityIndicator.stopAnimating()
-
-        
-
     }
     
     func getLocations() {
@@ -71,11 +75,7 @@ class TableViewController: UIViewController, UITableViewDelegate {
             } else {
                 if let _ = result {
                     performUIUpdatesOnMain {
-                        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                        
-                        let nextViewController = storyBoard.instantiateViewControllerWithIdentifier("loginView") as! LoginViewController
-                        self.presentViewController(nextViewController, animated:true, completion:nil)
-                        
+                        self.dismissViewControllerAnimated(true, completion: nil)
                         
                     }
                 }

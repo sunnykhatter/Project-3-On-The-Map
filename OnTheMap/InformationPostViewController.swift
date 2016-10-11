@@ -115,6 +115,8 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
         
         geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
                 alert(self, title: "Error", message: "Can't geocode the location", actionTitle: "Try again")
                 print("Error", error)
             } else {
