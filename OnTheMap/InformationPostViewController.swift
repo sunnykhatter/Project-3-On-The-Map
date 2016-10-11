@@ -14,6 +14,7 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
     @IBOutlet weak var linkView: UIView!
     @IBOutlet var mainView: UIView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var whereAreYouStudyingView: UIView!
     
     @IBOutlet weak var locationTextField: UITextField!
@@ -27,10 +28,8 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print(UdacityClient.sharedInstance().UserID!)
-        
         // Do any additional setup after loading the view.
+        self.activityIndicator.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,7 +76,7 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     performUIUpdatesOnMain {
-                        self.alert(self, title: "Error", message: "Can't add new location info to database", actionTitle: "Try again")
+                        alert(self, title: "Error", message: "Can't add new location info to database", actionTitle: "Try again")
                     }
                     print(error)
                 }
@@ -90,7 +89,7 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     performUIUpdatesOnMain {
-                        self.alert(self, title: "Error", message: "Can't update location info to database", actionTitle: "Try again")
+                        alert(self, title: "Error", message: "Can't update location info to database", actionTitle: "Try again")
                     }
                     print(error)
                 }
@@ -99,7 +98,9 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
     }
 
     @IBAction func findOnTheMap(sender: AnyObject) {
-          self.setUpMapView()
+
+        self.setUpMapView()
+
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -109,13 +110,17 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
     func setUpMapView() {
         let address = locationTextField.text!
         let geocoder = CLGeocoder()
+        self.activityIndicator.hidden = false
+        self.activityIndicator.startAnimating()
         
         geocoder.geocodeAddressString(address, completionHandler: {(placemarks, error) -> Void in
             if((error) != nil){
-                self.alert(self, title: "Error", message: "Can't geocode the location", actionTitle: "Try again")
+                alert(self, title: "Error", message: "Can't geocode the location", actionTitle: "Try again")
                 print("Error", error)
             } else {
                 if let placemark = placemarks?.first {
+  
+                    
                     self.coordinates = placemark.location!.coordinate
                     let location = CLLocationCoordinate2DMake(self.coordinates!.latitude, self.coordinates!.longitude)
                     let pin = MKPointAnnotation()
@@ -126,34 +131,23 @@ class InformationPostViewController: UIViewController, MKMapViewDelegate  {
                     // now move the map
                     let region = MKCoordinateRegion(center: pin.coordinate, span: span)
                     self.mapView.setRegion(region, animated: true)
+
+                    
                     UIView.animateWithDuration(0.4) {
+
                         self.whereAreYouStudyingView.alpha = 0.0
                     }
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.hidden = true
 
                 }
             }
         })
     }
-    
-    func alertWithOption (sender: AnyObject?, title: String, message: String, actionTitle: String){
-        let alertController = UIAlertController(title: title, message:
-            message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) in
-            
-            
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil))
         
-        sender!.presentViewController(alertController, animated: true, completion: nil)
-    }
+   
     
-    func alert(sender: AnyObject?, title: String, message: String, actionTitle: String){
-        let alertController = UIAlertController(title: title, message:
-            message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default,handler: nil))
-        
-        sender!.presentViewController(alertController, animated: true, completion: nil)
-    }
+
 }
  
 

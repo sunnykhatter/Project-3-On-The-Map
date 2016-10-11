@@ -43,6 +43,7 @@ class LoginViewController: UIViewController {
                 }
                 return
         }
+        
         UdacityClient.sharedInstance().createSession(email, password: password) {
             (SessionResults, error) in
             

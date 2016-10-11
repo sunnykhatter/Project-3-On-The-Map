@@ -10,6 +10,7 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
         
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
         @IBOutlet weak var mapView: MKMapView!
         
         override func viewDidLoad() {
@@ -21,6 +22,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     
     override func viewWillAppear(animated: Bool) {
+        self.activityIndicator.hidden = false
+        self.activityIndicator.startAnimating()
+        refreshMap()
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.hidden = true
+    }
+    
+    func refreshMap() {
+
+        
+        
         ParseClient.sharedInstance().getStudentLocations { (locations, error) in
             if let locations = locations {
                 performUIUpdatesOnMain {
@@ -35,12 +47,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     }
                     
                 }
+            } else {
+                performUIUpdatesOnMain {
+                   alert(self, title: "Error", message: "Can't get location info. Try again later", actionTitle: "OK")
+                }
             }
         }
+        self.mapView.reloadInputViews()
 
     }
     
-        override func didReceiveMemoryWarning() {
+
+    @IBAction func refresh(sender: AnyObject) {
+        refreshMap()
+
+    }
+    
+    
+    override func didReceiveMemoryWarning() {
             super.didReceiveMemoryWarning()
             // Dispose of any resources that can be recreated.
         }
@@ -78,6 +102,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     
+    
+    
+}
+
+extension UIView {
     func alert(sender: AnyObject?, title: String, message: String, actionTitle: String){
         let alertController = UIAlertController(title: title, message:
             message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -85,4 +114,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         sender!.presentViewController(alertController, animated: true, completion: nil)
     }
+    
+    func alertWithOption (sender: AnyObject?, title: String, message: String, actionTitle: String){
+        let alertController = UIAlertController(title: title, message:
+            message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) in
+            
+            
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil))
+        
+        sender!.presentViewController(alertController, animated: true, completion: nil)
+    }
+
+    
+    
 }
+

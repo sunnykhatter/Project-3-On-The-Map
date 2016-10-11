@@ -10,22 +10,35 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
+        self.tableView.hidden = true
+        self.activityIndicator.startAnimating()
         super.viewDidLoad()
 
     }
     
+    @IBAction func refresh(sender: AnyObject) {
+        getLocations()
+    }
     
     override func viewDidAppear(animated: Bool) {
         self.tableView.reloadData()
+        self.activityIndicator.hidden = true
+        self.tableView.hidden = false
 
     }
     
     override func viewWillAppear(animated: Bool) {
+
         getLocations()
         self.tableView.reloadData()
+        self.activityIndicator.stopAnimating()
+
+        
 
     }
     
@@ -35,17 +48,43 @@ class TableViewController: UIViewController, UITableViewDelegate {
                 StudentInformation.StudentArray = locations
                 
                 performUIUpdatesOnMain {
-                    //self.activityIndicatorView.stopAnimating()
-                    //self.overlay?.removeFromSuperview()
-                    //Convenience.alert(self, title: "Error", message: "Can't get location info. Try again later", actionTitle: "OK")
                     self.tableView.reloadData()
 
                 }
+            } else {
+                alert(self, title: "Error", message: "Can't get location info. Try again later", actionTitle: "OK")
             }
         }
     
 
     }
+
+    
+ 
+    @IBAction func logoutFunction(sender: AnyObject) {
+        UdacityClient.sharedInstance().destroySession {(result, error) in
+            if let error = error {
+                print(error)
+                performUIUpdatesOnMain {
+                    alert(self, title: "Error", message: "Can't logout. Try again later", actionTitle: "Dismiss")
+                }
+            } else {
+                if let _ = result {
+                    performUIUpdatesOnMain {
+                        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                        
+                        let nextViewController = storyBoard.instantiateViewControllerWithIdentifier("loginView") as! LoginViewController
+                        self.presentViewController(nextViewController, animated:true, completion:nil)
+                        
+                        
+                    }
+                }
+            }
+        }
+
+    }
+
+    
 
     
     override func didReceiveMemoryWarning() {
@@ -91,6 +130,9 @@ class TableViewController: UIViewController, UITableViewDelegate {
         }
         }
     }
+
+
+
 
     func alert(sender: AnyObject?, title: String, message: String, actionTitle: String){
         let alertController = UIAlertController(title: title, message:
